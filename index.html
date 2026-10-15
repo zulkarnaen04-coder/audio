@@ -137,10 +137,11 @@
       text-shadow: 0 0 10px var(--neon-green);
     }
 
-    .lives-board {
+    .profession-board {
       font-size: 1.1rem;
       font-weight: bold;
-      color: var(--neon-pink);
+      color: var(--neon-yellow);
+      text-shadow: 0 0 10px var(--neon-yellow);
     }
 
     #message {
@@ -231,10 +232,11 @@
 
   <!-- Modal Game Over -->
   <div class="modal-overlay" id="modalGameOver" style="display: none;">
-    <div class="modal-box" style="border-color: var(--neon-pink); box-shadow: 0 0 25px var(--neon-pink);">
-      <h2 style="color: var(--neon-pink);">KUIS SELESAI! ❌</h2>
-      <p style="margin: 15px 0; font-size: 1.1rem;">Kesempatan kamu sudah habis (3x Salah).</p>
-      <p style="font-size: 1.3rem; font-weight: bold; color: var(--neon-green);">Skor Akhir: <span id="finalScore">0</span></p>
+    <div class="modal-box" id="gameOverBox" style="border-color: var(--neon-pink); box-shadow: 0 0 25px var(--neon-pink);">
+      <h2 id="gameOverTitle" style="color: var(--neon-pink);">KUIS SELESAI! ❌</h2>
+      <p id="gameOverReason" style="margin: 15px 0; font-size: 1.1rem;">Kesempatan kamu sudah habis (3x Salah).</p>
+      <p style="font-size: 1.3rem; font-weight: bold; color: var(--neon-green);">Skor Akhir: <span id="finalScore">0</span> / 100</p>
+      <p style="font-size: 1.2rem; margin-top: 10px;">Status Profesi: <span id="finalProfession">🍽️ Cuci Piring</span></p>
       <p id="sendStatus" style="margin-top: 10px; font-size: 0.9rem; color: var(--neon-yellow);">Mengirim data ke guru...</p>
       <button class="btn-submit" onclick="location.reload()" style="background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple)); color: #fff;">Main Lagi 🔄</button>
     </div>
@@ -244,8 +246,8 @@
     <h1>Tebak Alat Musik Tradisional Indonesia</h1>
     <div class="status-panel">
       <button class="btn-play" id="btnPlay">🎼 Putar Suara Target</button>
-      <div class="score-board">Skor: <span id="score">0</span></div>
-      <div class="lives-board">Nyawa: <span id="lives">❤️ ❤️ ❤️</span></div>
+      <div class="score-board">Skor: <span id="score">0</span> / 100</div>
+      <div class="profession-board">Profesi: <span id="professionIcon">🍽️ Cuci Piring</span></div>
     </div>
     <div id="message">Klik tombol "Putar Suara Target" untuk memulai!</div>
   </header>
@@ -260,6 +262,7 @@
     let siswaKelas = "";
     let wrongCount = 0;
     const maxWrong = 3;
+    const maxScore = 100;
     let isGameOver = false;
 
     document.getElementById('btnMulai').addEventListener('click', () => {
@@ -274,16 +277,24 @@
       siswaNama = nama;
       siswaKelas = kelas;
       document.getElementById('modalIdentitas').style.display = 'none';
+      updateProfessionDisplay();
     });
 
-    function updateLivesDisplay() {
-      const remaining = maxWrong - wrongCount;
-      let hearts = "";
-      for (let i = 0; i < remaining; i++) {
-        hearts += "❤️ ";
+    function getProfessionStatus(currentScore) {
+      if (currentScore >= 100) {
+        return "👑 Presiden";
+      } else if (currentScore > 80) {
+        return "💼 Menteri";
+      } else if (currentScore === 80) {
+        return "👨‍🏫 Guru";
+      } else {
+        return "🍽️ Cuci Piring";
       }
-      if (remaining === 0) hearts = "💀 Habis";
-      document.getElementById('lives').textContent = hearts;
+    }
+
+    function updateProfessionDisplay() {
+      const profession = getProfessionStatus(score);
+      document.getElementById('professionIcon').textContent = profession;
     }
 
     function sendScoreToGSheet(skor) {
@@ -310,10 +321,22 @@
       });
     }
 
-    function triggerGameOver() {
+    function triggerGameOver(reasonMessage = "Kesempatan kamu sudah habis (3x Salah).") {
       isGameOver = true;
       isPlaying = false;
+      
+      const profession = getProfessionStatus(score);
       document.getElementById('finalScore').textContent = score;
+      document.getElementById('finalProfession').textContent = profession;
+      document.getElementById('gameOverReason').textContent = reasonMessage;
+      
+      if (score >= maxScore) {
+        document.getElementById('gameOverTitle').textContent = "SELAMAT! KUIS SELESAI! 🎉";
+        document.getElementById('gameOverTitle').style.color = "var(--neon-green)";
+        document.getElementById('gameOverBox').style.borderColor = "var(--neon-green)";
+        document.getElementById('gameOverBox').style.boxShadow = "0 0 25px var(--neon-green)";
+      }
+
       document.getElementById('modalGameOver').style.display = 'flex';
       
       // Kirim skor akhir ke Google Sheets saat game over
@@ -422,13 +445,24 @@
 
       if (clickedKey === targetKey) {
         score += 10;
+        if (score > maxScore) score = maxScore;
+        
         scoreEl.textContent = score;
+        updateProfessionDisplay();
         card.classList.add('correct');
 
         const realName = instrumentsData[clickedKey].name;
         messageEl.textContent = `KAMU BENAR! Ini adalah ${realName} 🎉`;
         messageEl.className = "msg-success";
         isPlaying = false;
+
+        if (score >= maxScore) {
+          setTimeout(() => {
+            card.classList.remove('correct');
+            triggerGameOver("Selamat! Kamu berhasil mencapai skor maksimal 100!");
+          }, 1500);
+          return;
+        }
 
         setTimeout(() => {
           card.classList.remove('correct');
@@ -439,7 +473,6 @@
 
       } else {
         wrongCount++;
-        updateLivesDisplay();
         card.classList.add('wrong');
 
         if (wrongCount >= maxWrong) {
@@ -447,7 +480,7 @@
           messageEl.className = "msg-error";
           setTimeout(() => {
             card.classList.remove('wrong');
-            triggerGameOver();
+            triggerGameOver("Kesempatan kamu sudah habis (3x Salah).");
           }, 800);
         } else {
           messageEl.textContent = `Salah! Sisa kesempatan: ${maxWrong - wrongCount}x lagi.`;
