@@ -176,24 +176,23 @@
       return `https://lh3.googleusercontent.com/d/${fileId}`;
     }
 
-    // Nama file MP3 yang sudah disesuaikan ke huruf kecil semua
+    // Nama file MP3 persis sesuai yang ada di repositori GitHub kamu
     const instrumentsData = {
       sasando: { name: "Sasando", audioFile: "sasando.mp3", imageId: "1iLAIIOUyKm1OW40_aSPSoFwn07rys6YC" },
       akordeon: { name: "Akordeon", audioFile: "akordeon.mp3", imageId: "1KRk0kbHbZCe-HBsOqHC4Ei60qa85zPkX" },
       kompang: { name: "Kompang", audioFile: "kompang.mp3", imageId: "1HgXPEtOY1eqAOv9hQr6spGM4tCUE5loj" },
-      gendang_melayu: { name: "Gendang Melayu", audioFile: "gendang_melayu.mp3", imageId: "1NWIItCaOID8OtXzeUaqCkiH66ZJyBvXY" },
+      gendang_melayu: { name: "Gendang Melayu", audioFile: "gendangmelayu.mp3", imageId: "1NWIItCaOID8OtXzeUaqCkiH66ZJyBvXY" },
       saluang: { name: "Saluang", audioFile: "saluang.mp3", imageId: "1RIMfOIRL8a_SzQPHLsR_Yelqnco7RDym" },
       bansi: { name: "Bansi", audioFile: "bansi.mp3", imageId: "12Og8Hhu1Bs3egLXZVNMUBxTFzyl36YXo" },
       gamelan: { name: "Gamelan", audioFile: "gamelan.mp3", imageId: "1NWIItCaOID8OtXzeUaqCkiH66ZJyBvXY" },
       marwas: { name: "Marwas", audioFile: "marwas.mp3", imageId: "181mdCNBlMkjCmlwJUKB9_alPRNT1IGVL" },
       biola: { name: "Biola", audioFile: "biola.mp3", imageId: "1rKICH8zisMy76s1m4h_bd1RCgeIidpYG" },
-      gondang_batak: { name: "Gondang Batak", audioFile: "gondang_batak.mp3", imageId: "10rTmVKfJDkGmSVLbtRKCky02tigU0fDc" },
+      gondang_batak: { name: "Gondang Batak", audioFile: "gondangbatak.mp3", imageId: "10rTmVKfJDkGmSVLbtRKCky02tigU0fDc" },
       talempong: { name: "Talempong", audioFile: "talempong.mp3", imageId: "1F_1-qD_IvmdE1_LIXazehXRCry0I2KcU" }
     };
 
     let currentAudio = null;
 
-    // Memutar file MP3 langsung dari lokasi yang sama
     function playAudio(fileName) {
       if (!fileName) return;
 
@@ -211,7 +210,7 @@
         }
       }).catch(err => {
         console.error("Gagal memutar audio:", err);
-        messageEl.textContent = "Error: File audio tidak ditemukan di GitHub!";
+        messageEl.textContent = "Error: File audio tidak ditemukan!";
         messageEl.className = "msg-error";
       });
     }
