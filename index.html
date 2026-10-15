@@ -46,7 +46,7 @@
       margin-bottom: 12px;
     }
 
-    /* Modal Form Identitas */
+    /* Modal Form Identitas & Game Over */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -100,7 +100,7 @@
 
     .status-panel {
       display: flex;
-      gap: 20px;
+      gap: 15px;
       justify-content: center;
       align-items: center;
       background: rgba(255, 255, 255, 0.05);
@@ -108,6 +108,7 @@
       border-radius: 50px;
       border: 1px solid rgba(0, 243, 255, 0.4);
       box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+      flex-wrap: wrap;
     }
 
     .btn-play {
@@ -130,10 +131,16 @@
     }
 
     .score-board {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: bold;
       color: var(--neon-green);
       text-shadow: 0 0 10px var(--neon-green);
+    }
+
+    .lives-board {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--neon-pink);
     }
 
     #message {
@@ -222,11 +229,23 @@
     </div>
   </div>
 
+  <!-- Modal Game Over -->
+  <div class="modal-overlay" id="modalGameOver" style="display: none;">
+    <div class="modal-box" style="border-color: var(--neon-pink); box-shadow: 0 0 25px var(--neon-pink);">
+      <h2 style="color: var(--neon-pink);">KUIS SELESAI! ❌</h2>
+      <p style="margin: 15px 0; font-size: 1.1rem;">Kesempatan kamu sudah habis (3x Salah).</p>
+      <p style="font-size: 1.3rem; font-weight: bold; color: var(--neon-green);">Skor Akhir: <span id="finalScore">0</span></p>
+      <p id="sendStatus" style="margin-top: 10px; font-size: 0.9rem; color: var(--neon-yellow);">Mengirim data ke guru...</p>
+      <button class="btn-submit" onclick="location.reload()" style="background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple)); color: #fff;">Main Lagi 🔄</button>
+    </div>
+  </div>
+
   <header>
     <h1>Tebak Alat Musik Tradisional Indonesia</h1>
     <div class="status-panel">
       <button class="btn-play" id="btnPlay">🎼 Putar Suara Target</button>
       <div class="score-board">Skor: <span id="score">0</span></div>
+      <div class="lives-board">Nyawa: <span id="lives">❤️ ❤️ ❤️</span></div>
     </div>
     <div id="message">Klik tombol "Putar Suara Target" untuk memulai!</div>
   </header>
@@ -235,10 +254,13 @@
 
   <script>
     // MASUKKAN URL GOOGLE APPS SCRIPT KAMU DI SINI
-    const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbwHaYUn_Ht10DTaMc6CXJfkjDVi8IQGI4wV_CCmldkwLTudZR9yPa7eGH-lDaR22EyD/exec";
+    const URL_GOOGLE_SHEETS = "GANTI_DENGAN_URL_WEB_APP_GOOGLE_APPS_SCRIPT_KAMU";
 
     let siswaNama = "";
     let siswaKelas = "";
+    let wrongCount = 0;
+    const maxWrong = 3;
+    let isGameOver = false;
 
     document.getElementById('btnMulai').addEventListener('click', () => {
       const nama = document.getElementById('inputNama').value.trim();
@@ -254,8 +276,22 @@
       document.getElementById('modalIdentitas').style.display = 'none';
     });
 
+    function updateLivesDisplay() {
+      const remaining = maxWrong - wrongCount;
+      let hearts = "";
+      for (let i = 0; i < remaining; i++) {
+        hearts += "❤️ ";
+      }
+      if (remaining === 0) hearts = "💀 Habis";
+      document.getElementById('lives').textContent = hearts;
+    }
+
     function sendScoreToGSheet(skor) {
-      if (!URL_GOOGLE_SHEETS || URL_GOOGLE_SHEETS.includes("GANTI_DENGAN_URL")) return;
+      const statusEl = document.getElementById('sendStatus');
+      if (!URL_GOOGLE_SHEETS || URL_GOOGLE_SHEETS.includes("GANTI_DENGAN_URL")) {
+        statusEl.textContent = "Data tidak terhubung ke Google Sheets (URL belum diisi).";
+        return;
+      }
 
       fetch(URL_GOOGLE_SHEETS, {
         method: "POST",
@@ -267,10 +303,21 @@
           skor: skor
         })
       }).then(() => {
-        console.log("Skor berhasil dikirim ke Google Sheets!");
+        statusEl.textContent = "✅ Nilai berhasil terkirim ke Guru!";
       }).catch(err => {
         console.error("Gagal mengirim skor:", err);
+        statusEl.textContent = "❌ Gagal mengirim nilai ke Google Sheets.";
       });
+    }
+
+    function triggerGameOver() {
+      isGameOver = true;
+      isPlaying = false;
+      document.getElementById('finalScore').textContent = score;
+      document.getElementById('modalGameOver').style.display = 'flex';
+      
+      // Kirim skor akhir ke Google Sheets saat game over
+      sendScoreToGSheet(score);
     }
 
     function driveImageUrl(fileId) {
@@ -294,7 +341,7 @@
     let currentAudio = null;
 
     function playAudio(fileName) {
-      if (!fileName) return;
+      if (!fileName || isGameOver) return;
 
       if (currentAudio) {
         currentAudio.pause();
@@ -354,6 +401,7 @@
     }
 
     btnPlayEl.addEventListener('click', () => {
+      if (isGameOver) return;
       if (!targetKey) {
         pickRandomTarget();
       }
@@ -362,6 +410,8 @@
     });
 
     function handleCardClick(card, clickedKey) {
+      if (isGameOver) return;
+
       playAudio(instrumentsData[clickedKey].audioFile);
 
       if (!isPlaying) {
@@ -374,9 +424,6 @@
         score += 10;
         scoreEl.textContent = score;
         card.classList.add('correct');
-        
-        // Kirim skor otomatis setiap kali menjawab benar
-        sendScoreToGSheet(score);
 
         const realName = instrumentsData[clickedKey].name;
         messageEl.textContent = `KAMU BENAR! Ini adalah ${realName} 🎉`;
@@ -388,16 +435,28 @@
           pickRandomTarget();
           messageEl.textContent = "Klik 'Putar Suara Target' untuk melanjutkan!";
           messageEl.className = "";
-        }, 2500);
+        }, 2000);
 
       } else {
+        wrongCount++;
+        updateLivesDisplay();
         card.classList.add('wrong');
-        messageEl.textContent = "Salah! Coba tebak lagi atau putar ulang suara target.";
-        messageEl.className = "msg-error";
 
-        setTimeout(() => {
-          card.classList.remove('wrong');
-        }, 600);
+        if (wrongCount >= maxWrong) {
+          messageEl.textContent = "Salah! Kesempatan kamu sudah habis.";
+          messageEl.className = "msg-error";
+          setTimeout(() => {
+            card.classList.remove('wrong');
+            triggerGameOver();
+          }, 800);
+        } else {
+          messageEl.textContent = `Salah! Sisa kesempatan: ${maxWrong - wrongCount}x lagi.`;
+          messageEl.className = "msg-error";
+
+          setTimeout(() => {
+            card.classList.remove('wrong');
+          }, 600);
+        }
       }
     }
 
