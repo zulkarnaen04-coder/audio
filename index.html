@@ -46,6 +46,58 @@
       margin-bottom: 12px;
     }
 
+    /* Modal Form Identitas */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-box {
+      background: #1a1b26;
+      border: 2px solid var(--neon-cyan);
+      box-shadow: 0 0 25px var(--neon-cyan);
+      border-radius: 16px;
+      padding: 30px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .modal-box h2 {
+      margin-bottom: 15px;
+      color: var(--neon-cyan);
+    }
+
+    .modal-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #0c0d14;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .btn-submit {
+      background: linear-gradient(45deg, var(--neon-green), var(--neon-cyan));
+      border: none;
+      color: #000;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+    }
+
     .status-panel {
       display: flex;
       gap: 20px;
@@ -160,6 +212,16 @@
 </head>
 <body>
 
+  <!-- Modal Identitas Siswa -->
+  <div class="modal-overlay" id="modalIdentitas">
+    <div class="modal-box">
+      <h2>Isi Identitas Siswa</h2>
+      <input type="text" id="inputNama" placeholder="Nama Lengkap" required>
+      <input type="text" id="inputKelas" placeholder="Kelas (misal: 8A)" required>
+      <button class="btn-submit" id="btnMulai">Mulai Kuis 🚀</button>
+    </div>
+  </div>
+
   <header>
     <h1>Tebak Alat Musik Tradisional Indonesia</h1>
     <div class="status-panel">
@@ -172,11 +234,49 @@
   <div class="grid-container" id="grid"></div>
 
   <script>
+    // MASUKKAN URL GOOGLE APPS SCRIPT KAMU DI SINI
+    const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbwHaYUn_Ht10DTaMc6CXJfkjDVi8IQGI4wV_CCmldkwLTudZR9yPa7eGH-lDaR22EyD/exec";
+
+    let siswaNama = "";
+    let siswaKelas = "";
+
+    document.getElementById('btnMulai').addEventListener('click', () => {
+      const nama = document.getElementById('inputNama').value.trim();
+      const kelas = document.getElementById('inputKelas').value.trim();
+
+      if (!nama || !kelas) {
+        alert("Harap isi Nama dan Kelas terlebih dahulu!");
+        return;
+      }
+
+      siswaNama = nama;
+      siswaKelas = kelas;
+      document.getElementById('modalIdentitas').style.display = 'none';
+    });
+
+    function sendScoreToGSheet(skor) {
+      if (!URL_GOOGLE_SHEETS || URL_GOOGLE_SHEETS.includes("GANTI_DENGAN_URL")) return;
+
+      fetch(URL_GOOGLE_SHEETS, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nama: siswaNama,
+          kelas: siswaKelas,
+          skor: skor
+        })
+      }).then(() => {
+        console.log("Skor berhasil dikirim ke Google Sheets!");
+      }).catch(err => {
+        console.error("Gagal mengirim skor:", err);
+      });
+    }
+
     function driveImageUrl(fileId) {
       return `https://lh3.googleusercontent.com/d/${fileId}`;
     }
 
-    // Nama file MP3 persis sesuai yang ada di repositori GitHub kamu
     const instrumentsData = {
       sasando: { name: "Sasando", audioFile: "sasando.mp3", imageId: "1iLAIIOUyKm1OW40_aSPSoFwn07rys6YC" },
       akordeon: { name: "Akordeon", audioFile: "akordeon.mp3", imageId: "1KRk0kbHbZCe-HBsOqHC4Ei60qa85zPkX" },
@@ -184,7 +284,7 @@
       gendang_melayu: { name: "Gendang Melayu", audioFile: "gendangmelayu.mp3", imageId: "1NWIItCaOID8OtXzeUaqCkiH66ZJyBvXY" },
       saluang: { name: "Saluang", audioFile: "saluang.mp3", imageId: "1RIMfOIRL8a_SzQPHLsR_Yelqnco7RDym" },
       bansi: { name: "Bansi", audioFile: "bansi.mp3", imageId: "12Og8Hhu1Bs3egLXZVNMUBxTFzyl36YXo" },
-      gamelan: { name: "Gamelan", audioFile: "gamelan.mp3", imageId: "1NWIItCaOID8OtXzeUaqCkiH66ZJyBvXY" },
+      gamelan: { name: "Gamelan", audioFile: "gamelan.mp3", imageId: "1m5GpYfqLGQ6vI_1SweKGEMt6qLrKQl0M" },
       marwas: { name: "Marwas", audioFile: "marwas.mp3", imageId: "181mdCNBlMkjCmlwJUKB9_alPRNT1IGVL" },
       biola: { name: "Biola", audioFile: "biola.mp3", imageId: "1rKICH8zisMy76s1m4h_bd1RCgeIidpYG" },
       gondang_batak: { name: "Gondang Batak", audioFile: "gondangbatak.mp3", imageId: "10rTmVKfJDkGmSVLbtRKCky02tigU0fDc" },
@@ -275,6 +375,9 @@
         scoreEl.textContent = score;
         card.classList.add('correct');
         
+        // Kirim skor otomatis setiap kali menjawab benar
+        sendScoreToGSheet(score);
+
         const realName = instrumentsData[clickedKey].name;
         messageEl.textContent = `KAMU BENAR! Ini adalah ${realName} 🎉`;
         messageEl.className = "msg-success";
