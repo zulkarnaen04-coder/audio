@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tebak Alat Musik Tradisional Indonesia</title>
+  <style>
+    :root {
+      --bg-color: #06070d;
+      --card-bg: radial-gradient(circle, #1a1b26 0%, #0c0d14 100%);
+      --neon-cyan: #00f3ff;
+      --neon-pink: #ff007f;
+      --neon-green: #39ff14;
+      --neon-yellow: #ffe600;
+      --neon-purple: #9d4edd;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0 0 10px var(--neon-cyan), 0 0 25px var(--neon-cyan);
+      margin-bottom: 12px;
+    }
+
+    .status-panel {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px 25px;
+      border-radius: 50px;
+      border: 1px solid rgba(0, 243, 255, 0.4);
+      box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+    }
+
+    .btn-play {
+      background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 15px var(--neon-pink);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+
+    .btn-play:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px var(--neon-pink);
+    }
+
+    .score-board {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--neon-green);
+      text-shadow: 0 0 10px var(--neon-green);
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      min-height: 32px;
+      text-align: center;
+    }
+
+    .msg-success { color: var(--neon-green); text-shadow: 0 0 12px var(--neon-green); }
+    .msg-error { color: var(--neon-pink); text-shadow: 0 0 12px var(--neon-pink); }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1250px;
+      margin-top: 15px;
+    }
+
+    .instrument-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      aspect-ratio: 3 / 4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .instrument-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .instrument-card:hover {
+      transform: translateY(-8px) scale(1.04);
+      border-color: var(--card-neon-color);
+      box-shadow: 0 0 25px var(--card-neon-color), inset 0 0 15px var(--card-neon-color);
+    }
+
+    .instrument-card.correct {
+      border-color: var(--neon-green) !important;
+      box-shadow: 0 0 40px var(--neon-green), inset 0 0 20px var(--neon-green) !important;
+      animation: pulse-correct 0.6s ease;
+    }
+
+    .instrument-card.wrong {
+      border-color: #ff0000 !important;
+      box-shadow: 0 0 35px #ff0000, inset 0 0 15px #ff0000 !important;
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes pulse-correct {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Tebak Alat Musik Tradisional Indonesia</h1>
+    <div class="status-panel">
+      <button class="btn-play" id="btnPlay">🎼 Putar Suara Target</button>
+      <div class="score-board">Skor: <span id="score">0</span></div>
+    </div>
+    <div id="message">Klik tombol "Putar Suara Target" untuk memulai!</div>
+  </header>
+
+  <div class="grid-container" id="grid"></div>
+
+  <script>
+    function driveImageUrl(fileId) {
+      return `https://lh3.googleusercontent.com/d/${fileId}`;
+    }
+
+    // Nama file MP3 yang sudah disesuaikan ke huruf kecil semua
+    const instrumentsData = {
+      sasando: { name: "Sasando", audioFile: "sasando.mp3", imageId: "1iLAIIOUyKm1OW40_aSPSoFwn07rys6YC" },
+      akordeon: { name: "Akordeon", audioFile: "akordeon.mp3", imageId: "1KRk0kbHbZCe-HBsOqHC4Ei60qa85zPkX" },
+      kompang: { name: "Kompang", audioFile: "kompang.mp3", imageId: "1HgXPEtOY1eqAOv9hQr6spGM4tCUE5loj" },
+      gendang_melayu: { name: "Gendang Melayu", audioFile: "gendang_melayu.mp3", imageId: "1NWIItCaOID8OtXzeUaqCkiH66ZJyBvXY" },
+      saluang: { name: "Saluang", audioFile: "saluang.mp3", imageId: "1RIMfOIRL8a_SzQPHLsR_Yelqnco7RDym" },
+      bansi: { name: "Bansi", audioFile: "bansi.mp3", imageId: "12Og8Hhu1Bs3egLXZVNMUBxTFzyl36YXo" },
+      gamelan: { name: "Gamelan", audioFile: "gamelan.mp3", imageId: "1NWIItCaOID8OtXzeUaqCkiH66ZJyBvXY" },
+      marwas: { name: "Marwas", audioFile: "marwas.mp3", imageId: "181mdCNBlMkjCmlwJUKB9_alPRNT1IGVL" },
+      biola: { name: "Biola", audioFile: "biola.mp3", imageId: "1rKICH8zisMy76s1m4h_bd1RCgeIidpYG" },
+      gondang_batak: { name: "Gondang Batak", audioFile: "gondang_batak.mp3", imageId: "10rTmVKfJDkGmSVLbtRKCky02tigU0fDc" },
+      talempong: { name: "Talempong", audioFile: "talempong.mp3", imageId: "1F_1-qD_IvmdE1_LIXazehXRCry0I2KcU" }
+    };
+
+    let currentAudio = null;
+
+    // Memutar file MP3 langsung dari lokasi yang sama
+    function playAudio(fileName) {
+      if (!fileName) return;
+
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+
+      currentAudio = new Audio(`./${fileName}`);
+
+      currentAudio.play().then(() => {
+        if (isPlaying) {
+          messageEl.textContent = "Dengarkan baik-baik... Gambar mana yang bersuara seperti ini?";
+          messageEl.className = "";
+        }
+      }).catch(err => {
+        console.error("Gagal memutar audio:", err);
+        messageEl.textContent = "Error: File audio tidak ditemukan di GitHub!";
+        messageEl.className = "msg-error";
+      });
+    }
+
+    const neonColors = ['#00f3ff', '#ff007f', '#39ff14', '#ffe600', '#9d4edd'];
+    const instrumentKeys = Object.keys(instrumentsData);
+    let targetKey = '';
+    let score = 0;
+    let isPlaying = false;
+
+    const gridEl = document.getElementById('grid');
+    const btnPlayEl = document.getElementById('btnPlay');
+    const scoreEl = document.getElementById('score');
+    const messageEl = document.getElementById('message');
+
+    function renderCards() {
+      gridEl.innerHTML = '';
+      const shuffled = [...instrumentKeys].sort(() => Math.random() - 0.5);
+
+      shuffled.forEach((key, index) => {
+        const item = instrumentsData[key];
+        const card = document.createElement('div');
+        card.classList.add('instrument-card');
+        const color = neonColors[index % neonColors.length];
+        card.style.setProperty('--card-neon-color', color);
+
+        const img = document.createElement('img');
+        img.src = driveImageUrl(item.imageId);
+        img.alt = item.name;
+        card.appendChild(img);
+
+        card.dataset.key = key;
+        card.addEventListener('click', () => handleCardClick(card, key));
+        gridEl.appendChild(card);
+      });
+    }
+
+    function pickRandomTarget() {
+      const randomIndex = Math.floor(Math.random() * instrumentKeys.length);
+      targetKey = instrumentKeys[randomIndex];
+    }
+
+    btnPlayEl.addEventListener('click', () => {
+      if (!targetKey) {
+        pickRandomTarget();
+      }
+      isPlaying = true;
+      playAudio(instrumentsData[targetKey].audioFile);
+    });
+
+    function handleCardClick(card, clickedKey) {
+      playAudio(instrumentsData[clickedKey].audioFile);
+
+      if (!isPlaying) {
+        messageEl.textContent = "Klik 'Putar Suara Target' terlebih dahulu!";
+        messageEl.className = "msg-error";
+        return;
+      }
+
+      if (clickedKey === targetKey) {
+        score += 10;
+        scoreEl.textContent = score;
+        card.classList.add('correct');
+        
+        const realName = instrumentsData[clickedKey].name;
+        messageEl.textContent = `KAMU BENAR! Ini adalah ${realName} 🎉`;
+        messageEl.className = "msg-success";
+        isPlaying = false;
+
+        setTimeout(() => {
+          card.classList.remove('correct');
+          pickRandomTarget();
+          messageEl.textContent = "Klik 'Putar Suara Target' untuk melanjutkan!";
+          messageEl.className = "";
+        }, 2500);
+
+      } else {
+        card.classList.add('wrong');
+        messageEl.textContent = "Salah! Coba tebak lagi atau putar ulang suara target.";
+        messageEl.className = "msg-error";
+
+        setTimeout(() => {
+          card.classList.remove('wrong');
+        }, 600);
+      }
+    }
+
+    renderCards();
+    pickRandomTarget();
+  </script>
+</body>
+</html>
