@@ -384,6 +384,7 @@
           <br>• Jawaban Benar: +10 Poin
           <br>• Jawaban Salah: -5 Poin
         </li>
+        <li>👑 <b>Target Maksimal:</b> Kuis otomatis selesai saat mencapai 500 Poin.</li>
         <li>🎖️ <b>Pangkat/Ikon:</b>
           <br>• 400 - 500 : 👑 Presiden
           <br>• 175 - 399 : 💼 Menteri
@@ -602,7 +603,6 @@
 
       if (clickedKey === targetKey) {
         score += 10;
-        if (score > 500) score = 500;
         
         scoreEl.textContent = score;
         updateProfessionDisplay();
@@ -617,6 +617,17 @@
         overlay.style.display = 'flex';
 
         isPlaying = false;
+
+        // CEK JIKA MENCAPAI SKOR MAKSIMAL 500
+        if (score >= 500) {
+          score = 500;
+          scoreEl.textContent = score;
+          setTimeout(() => {
+            overlay.style.display = 'none';
+            triggerGameOver("SELAMAT! 👑 Kamu mencapai skor maksimal 500 Poin!");
+          }, 2000);
+          return;
+        }
 
         setTimeout(() => {
           overlay.style.display = 'none';
@@ -676,8 +687,15 @@
       document.getElementById('finalScore').textContent = score;
       document.getElementById('finalProfession').textContent = getProfessionStatus(score);
       document.getElementById('gameOverReason').textContent = reason;
+      
+      if (score >= 500) {
+        document.getElementById('gameOverTitle').textContent = "SELESAI KELAS SANG JUARA! 👑";
+        document.getElementById('gameOverTitle').style.color = "var(--neon-green)";
+      }
+
       document.getElementById('modalGameOver').style.display = 'flex';
 
+      // Mengirimkan skor ke Google Sheets secara otomatis
       sendScoreToGSheet(score);
     }
   </script>
