@@ -148,7 +148,7 @@
     .game-container {
       display: none;
       width: 100%;
-      max-width: 1300px;
+      max-width: 1200px;
       flex-direction: column;
       align-items: center;
     }
@@ -223,13 +223,20 @@
     .msg-success { color: var(--neon-green); text-shadow: 0 0 12px var(--neon-green); }
     .msg-error { color: var(--neon-pink); text-shadow: 0 0 12px var(--neon-pink); }
 
-    /* Grid Ringkas Agar Muat di Layar HP & Laptop */
+    /* Layout Grid Khusus Windows 10 / Laptop */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
+      gap: 12px;
       width: 100%;
       margin-top: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .grid-container {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+      }
     }
 
     @media (max-width: 600px) {
@@ -242,7 +249,7 @@
     .instrument-card {
       background: var(--card-bg);
       border-radius: 8px;
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 1 / 1;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -260,6 +267,7 @@
       height: 100%;
       object-fit: cover;
       border-radius: 5px;
+      display: block;
     }
 
     .instrument-card:hover {
@@ -280,7 +288,7 @@
       40%, 80% { transform: translateX(5px); }
     }
 
-    /* Modal Overlay Khusus Gambar Benar (Full Screen Pop-up) */
+    /* Modal Overlay Benar */
     .correct-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -413,7 +421,7 @@
     <div class="grid-container" id="grid"></div>
   </div>
 
-  <!-- OVERLAY BENAR (Gambar Membesar Menutupi Layar) -->
+  <!-- OVERLAY BENAR -->
   <div class="correct-overlay" id="correctOverlay">
     <div class="correct-box">
       <img id="correctImage" src="" alt="Gambar Benar">
@@ -434,7 +442,7 @@
   </div>
 
   <script>
-    const URL_GOOGLE_SHEETS = "GANTI_DENGAN_URL_WEB_APP_GOOGLE_APPS_SCRIPT_KAMU";
+    const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbwHaYUn_Ht10DTaMc6CXJfkjDVi8IQGI4wV_CCmldkwLTudZR9yPa7eGH-lDaR22EyD/exec";
 
     let siswaNama = "";
     let siswaKelas = "";
@@ -442,10 +450,9 @@
     let isGameOver = false;
     let isPlaying = false;
     
-    let totalSeconds = 30 * 60; // 30 Menit
+    let totalSeconds = 30 * 60;
     let timerInterval = null;
 
-    // DATA 20 ALAT MUSIK (File sejajar di dalam repo)
     const instrumentsData = {
       akordeon: { name: "Akordeon", audioFile: "akordeon.mp3", imageFile: "akordeon.JPG" },
       angklung: { name: "Angklung", audioFile: "angklung.mp3", imageFile: "angklung.JPG" },
@@ -473,7 +480,6 @@
     let targetKey = '';
     let currentAudio = null;
 
-    // Antrean Putaran Pertama
     let firstRoundQueue = [...instrumentKeys].sort(() => Math.random() - 0.5);
 
     document.getElementById('btnStartGame').addEventListener('click', () => {
@@ -512,15 +518,10 @@
     }
 
     function getProfessionStatus(currentScore) {
-      if (currentScore >= 400) {
-        return "👑 Presiden";
-      } else if (currentScore >= 175) {
-        return "💼 Menteri";
-      } else if (currentScore >= 90) {
-        return "👨‍🏫 Guru";
-      } else {
-        return "⚔️ Warrior";
-      }
+      if (currentScore >= 400) return "👑 Presiden";
+      if (currentScore >= 175) return "💼 Menteri";
+      if (currentScore >= 90) return "👨‍🏫 Guru";
+      return "⚔️ Warrior";
     }
 
     function updateProfessionDisplay() {
@@ -536,7 +537,8 @@
       }
     }
 
-    function playAudio(filePath) {
+    // Pemutaran Audio dengan Dukungan Fallback & Bebas Blokir Windows Browser
+    function playAudio(filePath, retryIndex = 0) {
       if (!filePath || isGameOver) return;
 
       if (currentAudio) {
@@ -545,16 +547,26 @@
       }
 
       currentAudio = new Audio(filePath);
-      currentAudio.play().then(() => {
-        if (isPlaying) {
-          messageEl.textContent = "Dengarkan baik-baik... Tebak alat musik yang bersuara ini!";
-          messageEl.className = "";
-        }
-      }).catch(err => {
-        console.error("Gagal memutar audio:", err);
-        messageEl.textContent = "Error: File audio tidak ditemukan!";
-        messageEl.className = "msg-error";
-      });
+      
+      const playPromise = currentAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          if (isPlaying) {
+            messageEl.textContent = "Dengarkan baik-baik... Tebak alat musik yang bersuara ini!";
+            messageEl.className = "";
+          }
+        }).catch(err => {
+          console.warn("Mencoba ekstensi audio alternatif...", err);
+          const extList = ['.mp3', '.MP3', '.wav', '.WAV'];
+          if (retryIndex < extList.length) {
+            const baseName = filePath.substring(0, filePath.lastIndexOf('.'));
+            playAudio(baseName + extList[retryIndex], retryIndex + 1);
+          } else {
+            messageEl.textContent = "Error: File audio tidak dapat diputar atau tidak ditemukan!";
+            messageEl.className = "msg-error";
+          }
+        });
+      }
     }
 
     const neonColors = ['#00f3ff', '#ff007f', '#39ff14', '#ffe600', '#9d4edd'];
@@ -562,6 +574,20 @@
     const btnPlayEl = document.getElementById('btnPlay');
     const scoreEl = document.getElementById('score');
     const messageEl = document.getElementById('message');
+
+    // Penanganan Gambar Tidak Ditemukan / Salah Format Ekstensi di Windows
+    function handleImageError(img, originalPath, step = 0) {
+      const baseName = originalPath.substring(0, originalPath.lastIndexOf('.'));
+      const formats = ['.JPG', '.jpg', '.jpeg', '.PNG', '.png'];
+      
+      if (step < formats.length) {
+        img.onerror = () => handleImageError(img, originalPath, step + 1);
+        img.src = baseName + formats[step];
+      } else {
+        img.onerror = null;
+        img.alt = "Gambar tidak ditemukan";
+      }
+    }
 
     function renderCards() {
       gridEl.innerHTML = '';
@@ -576,6 +602,8 @@
         const img = document.createElement('img');
         img.src = item.imageFile;
         img.alt = item.name;
+        img.onerror = () => handleImageError(img, item.imageFile);
+
         card.appendChild(img);
 
         card.dataset.key = key;
@@ -610,15 +638,16 @@
         const realName = instrumentsData[clickedKey].name;
         const imageSrc = instrumentsData[clickedKey].imageFile;
 
-        // Tampilkan Overlay Pop-Up Benar Menutupi Layar
         const overlay = document.getElementById('correctOverlay');
-        document.getElementById('correctImage').src = imageSrc;
+        const correctImg = document.getElementById('correctImage');
+        correctImg.src = imageSrc;
+        correctImg.onerror = () => handleImageError(correctImg, imageSrc);
+
         document.getElementById('correctText').textContent = `BENAR! 🎉 Ini adalah ${realName} (+10 Poin)`;
         overlay.style.display = 'flex';
 
         isPlaying = false;
 
-        // CEK JIKA MENCAPAI SKOR MAKSIMAL 500
         if (score >= 500) {
           score = 500;
           scoreEl.textContent = score;
@@ -637,7 +666,6 @@
         }, 2000);
 
       } else {
-        // Kurangi 5 poin jika salah
         score -= 5;
         if (score < 0) score = 0;
 
@@ -694,8 +722,6 @@
       }
 
       document.getElementById('modalGameOver').style.display = 'flex';
-
-      // Mengirimkan skor ke Google Sheets secara otomatis
       sendScoreToGSheet(score);
     }
   </script>
