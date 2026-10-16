@@ -29,7 +29,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px 15px;
+      padding: 10px;
     }
 
     /* Container Tampilan Awal */
@@ -43,7 +43,7 @@
     }
 
     .brand-title {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 900;
       letter-spacing: 2px;
       color: var(--neon-cyan);
@@ -53,11 +53,11 @@
     }
 
     .sub-title {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--neon-pink);
       text-shadow: 0 0 10px var(--neon-pink);
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       text-align: center;
     }
 
@@ -65,31 +65,30 @@
       width: 100%;
       background: rgba(20, 20, 35, 0.6);
       border: 2px solid var(--neon-pink);
-      border-radius: 20px;
-      padding: 20px;
+      border-radius: 16px;
+      padding: 15px;
       box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .form-card label {
       display: block;
       color: var(--neon-yellow);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: bold;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .form-card input {
       width: 100%;
-      padding: 14px;
-      margin-bottom: 15px;
-      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 8px;
       border: 2px solid #00f3ff55;
       background: #090a10;
       color: #fff;
-      font-size: 1rem;
+      font-size: 0.95rem;
       outline: none;
-      transition: all 0.3s ease;
     }
 
     .form-card input:focus {
@@ -101,16 +100,16 @@
       width: 100%;
       background: rgba(20, 20, 35, 0.6);
       border: 2px solid var(--neon-purple);
-      border-radius: 20px;
-      padding: 20px;
+      border-radius: 16px;
+      padding: 15px;
       box-shadow: 0 0 20px rgba(157, 78, 221, 0.3);
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
     .rules-card h3 {
       color: var(--neon-yellow);
-      font-size: 1rem;
-      margin-bottom: 12px;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
       letter-spacing: 1px;
     }
 
@@ -119,9 +118,9 @@
     }
 
     .rules-card li {
-      font-size: 0.88rem;
-      line-height: 1.5;
-      margin-bottom: 10px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      margin-bottom: 8px;
       color: #ddd;
     }
 
@@ -130,8 +129,8 @@
       background: linear-gradient(90deg, #00f3ff, #9d4edd);
       border: none;
       color: #fff;
-      padding: 16px;
-      font-size: 1.2rem;
+      padding: 14px;
+      font-size: 1.1rem;
       font-weight: 800;
       border-radius: 50px;
       cursor: pointer;
@@ -149,33 +148,33 @@
     .game-container {
       display: none;
       width: 100%;
-      max-width: 1250px;
+      max-width: 1300px;
       flex-direction: column;
       align-items: center;
     }
 
     header {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       width: 100%;
     }
 
     h1 {
-      font-size: 1.8rem;
+      font-size: 1.4rem;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
       color: #fff;
-      text-shadow: 0 0 10px var(--neon-cyan), 0 0 25px var(--neon-cyan);
-      margin-bottom: 15px;
+      text-shadow: 0 0 10px var(--neon-cyan);
+      margin-bottom: 10px;
     }
 
     .status-panel {
       display: flex;
-      gap: 15px;
+      gap: 10px;
       justify-content: center;
       align-items: center;
       background: rgba(255, 255, 255, 0.05);
-      padding: 12px 25px;
+      padding: 8px 15px;
       border-radius: 50px;
       border: 1px solid rgba(0, 243, 255, 0.4);
       box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
@@ -186,65 +185,73 @@
       background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
       border: none;
       color: white;
-      padding: 10px 20px;
-      font-size: 0.95rem;
+      padding: 8px 16px;
+      font-size: 0.85rem;
       font-weight: bold;
       border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 0 15px var(--neon-pink);
+      box-shadow: 0 0 10px var(--neon-pink);
       transition: all 0.3s ease;
       text-transform: uppercase;
     }
 
     .btn-play:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 25px var(--neon-pink);
+      box-shadow: 0 0 20px var(--neon-pink);
     }
 
     .info-badge {
-      font-size: 1rem;
+      font-size: 0.88rem;
       font-weight: bold;
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: 20px;
       background: rgba(0, 0, 0, 0.4);
     }
 
-    .timer-board { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); }
-    .score-board { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
-    .profession-board { color: var(--neon-yellow); text-shadow: 0 0 10px var(--neon-yellow); }
+    .timer-board { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan); }
+    .score-board { color: var(--neon-green); text-shadow: 0 0 8px var(--neon-green); }
+    .profession-board { color: var(--neon-yellow); text-shadow: 0 0 8px var(--neon-yellow); }
 
     #message {
-      margin-top: 15px;
-      font-size: 1.1rem;
+      margin-top: 8px;
+      font-size: 1rem;
       font-weight: bold;
-      min-height: 32px;
+      min-height: 24px;
       text-align: center;
     }
 
     .msg-success { color: var(--neon-green); text-shadow: 0 0 12px var(--neon-green); }
     .msg-error { color: var(--neon-pink); text-shadow: 0 0 12px var(--neon-pink); }
 
+    /* Grid Ringkas Agar Muat di Layar HP & Laptop */
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
       width: 100%;
-      margin-top: 15px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .grid-container {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+      }
     }
 
     .instrument-card {
       background: var(--card-bg);
-      border-radius: 14px;
+      border-radius: 8px;
       aspect-ratio: 3 / 4;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
       position: relative;
-      border: 2px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.8);
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      padding: 8px;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      transition: all 0.2s ease;
+      padding: 4px;
       overflow: hidden;
     }
 
@@ -252,37 +259,69 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 5px;
     }
 
     .instrument-card:hover {
-      transform: translateY(-5px) scale(1.03);
+      transform: scale(1.05);
       border-color: var(--card-neon-color);
-      box-shadow: 0 0 20px var(--card-neon-color);
-    }
-
-    .instrument-card.correct {
-      border-color: var(--neon-green) !important;
-      box-shadow: 0 0 35px var(--neon-green) !important;
-      animation: pulse-correct 0.6s ease;
+      box-shadow: 0 0 15px var(--card-neon-color);
     }
 
     .instrument-card.wrong {
       border-color: #ff0000 !important;
-      box-shadow: 0 0 30px #ff0000 !important;
+      box-shadow: 0 0 20px #ff0000 !important;
       animation: shake 0.4s ease;
-    }
-
-    @keyframes pulse-correct {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-      100% { transform: scale(1); }
     }
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-6px); }
-      40%, 80% { transform: translateX(6px); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+
+    /* Modal Overlay Khusus Gambar Benar (Full Screen Pop-up) */
+    .correct-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.92);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .correct-box {
+      max-width: 90vw;
+      max-height: 70vh;
+      border-radius: 16px;
+      border: 4px solid var(--neon-green);
+      box-shadow: 0 0 40px var(--neon-green);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .correct-box img {
+      width: 100%;
+      max-height: 65vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .correct-text {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--neon-green);
+      text-shadow: 0 0 15px var(--neon-green);
+      text-align: center;
+      padding: 0 15px;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.3); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     /* Modal Game Over */
@@ -301,9 +340,9 @@
       border: 2px solid var(--neon-cyan);
       box-shadow: 0 0 25px var(--neon-cyan);
       border-radius: 16px;
-      padding: 30px;
+      padding: 25px;
       width: 90%;
-      max-width: 400px;
+      max-width: 380px;
       text-align: center;
     }
 
@@ -373,6 +412,14 @@
     <div class="grid-container" id="grid"></div>
   </div>
 
+  <!-- OVERLAY BENAR (Gambar Membesar Menutupi Layar) -->
+  <div class="correct-overlay" id="correctOverlay">
+    <div class="correct-box">
+      <img id="correctImage" src="" alt="Gambar Benar">
+    </div>
+    <div class="correct-text" id="correctText">BENAR! Ini adalah...</div>
+  </div>
+
   <!-- MODAL SELESAI -->
   <div class="modal-overlay" id="modalGameOver" style="display: none;">
     <div class="modal-box" id="gameOverBox">
@@ -397,7 +444,7 @@
     let totalSeconds = 30 * 60; // 30 Menit
     let timerInterval = null;
 
-    // DATA 20 ALAT MUSIK (File sejajar di dalam repo yang sama)
+    // DATA 20 ALAT MUSIK (File sejajar di dalam repo)
     const instrumentsData = {
       akordeon: { name: "Akordeon", audioFile: "akordeon.mp3", imageFile: "akordeon.JPG" },
       angklung: { name: "Angklung", audioFile: "angklung.mp3", imageFile: "angklung.JPG" },
@@ -425,7 +472,7 @@
     let targetKey = '';
     let currentAudio = null;
 
-    // Antrean Putaran Pertama: Semua 20 alat muncul 1x dulu
+    // Antrean Putaran Pertama
     let firstRoundQueue = [...instrumentKeys].sort(() => Math.random() - 0.5);
 
     document.getElementById('btnStartGame').addEventListener('click', () => {
@@ -559,19 +606,24 @@
         
         scoreEl.textContent = score;
         updateProfessionDisplay();
-        card.classList.add('correct');
 
         const realName = instrumentsData[clickedKey].name;
-        messageEl.textContent = `BENAR! 🎉 Ini adalah ${realName} (+10 Poin)`;
-        messageEl.className = "msg-success";
+        const imageSrc = instrumentsData[clickedKey].imageFile;
+
+        // Tampilkan Overlay Pop-Up Benar Menutupi Layar
+        const overlay = document.getElementById('correctOverlay');
+        document.getElementById('correctImage').src = imageSrc;
+        document.getElementById('correctText').textContent = `BENAR! 🎉 Ini adalah ${realName} (+10 Poin)`;
+        overlay.style.display = 'flex';
+
         isPlaying = false;
 
         setTimeout(() => {
-          card.classList.remove('correct');
+          overlay.style.display = 'none';
           pickNextTarget();
           messageEl.textContent = "Klik 'Putar Suara Target' untuk melanjutkan!";
           messageEl.className = "";
-        }, 1800);
+        }, 2000);
 
       } else {
         // Kurangi 5 poin jika salah
