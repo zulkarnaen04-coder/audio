@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kuis Ear Training Alat Musik Tradisional</title>
+  <title>Tebak Alat Musik Tradisional Indonesia</title>
   <style>
     :root {
-      --bg-color: #0c0d14;
+      --bg-color: #06070d;
       --card-bg: radial-gradient(circle, #1a1b26 0%, #0c0d14 100%);
       --neon-cyan: #00f3ff;
       --neon-pink: #ff007f;
@@ -29,10 +29,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 10px;
+      padding: 20px 15px;
     }
 
-    /* Container Tampilan Awal */
+    /* Container Tampilan Awal sesuai screenshot */
     .welcome-container {
       width: 100%;
       max-width: 480px;
@@ -43,7 +43,7 @@
     }
 
     .brand-title {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 900;
       letter-spacing: 2px;
       color: var(--neon-cyan);
@@ -53,11 +53,11 @@
     }
 
     .sub-title {
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--neon-pink);
       text-shadow: 0 0 10px var(--neon-pink);
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       text-align: center;
     }
 
@@ -65,30 +65,31 @@
       width: 100%;
       background: rgba(20, 20, 35, 0.6);
       border: 2px solid var(--neon-pink);
-      border-radius: 16px;
-      padding: 15px;
+      border-radius: 20px;
+      padding: 20px;
       box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     .form-card label {
       display: block;
       color: var(--neon-yellow);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: bold;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .form-card input {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 15px;
+      border-radius: 12px;
       border: 2px solid #00f3ff55;
       background: #090a10;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 1rem;
       outline: none;
+      transition: all 0.3s ease;
     }
 
     .form-card input:focus {
@@ -100,16 +101,16 @@
       width: 100%;
       background: rgba(20, 20, 35, 0.6);
       border: 2px solid var(--neon-purple);
-      border-radius: 16px;
-      padding: 15px;
+      border-radius: 20px;
+      padding: 20px;
       box-shadow: 0 0 20px rgba(157, 78, 221, 0.3);
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .rules-card h3 {
       color: var(--neon-yellow);
-      font-size: 0.95rem;
-      margin-bottom: 10px;
+      font-size: 1rem;
+      margin-bottom: 12px;
       letter-spacing: 1px;
     }
 
@@ -118,9 +119,9 @@
     }
 
     .rules-card li {
-      font-size: 0.85rem;
-      line-height: 1.4;
-      margin-bottom: 8px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin-bottom: 10px;
       color: #ddd;
     }
 
@@ -129,8 +130,8 @@
       background: linear-gradient(90deg, #00f3ff, #9d4edd);
       border: none;
       color: #fff;
-      padding: 14px;
-      font-size: 1.1rem;
+      padding: 16px;
+      font-size: 1.2rem;
       font-weight: 800;
       border-radius: 50px;
       cursor: pointer;
@@ -144,37 +145,37 @@
       box-shadow: 0 0 30px var(--neon-cyan);
     }
 
-    /* Container Kuis Utama */
+    /* Tampilan Permainan Utama */
     .game-container {
       display: none;
       width: 100%;
-      max-width: 1300px;
+      max-width: 1250px;
       flex-direction: column;
       align-items: center;
     }
 
     header {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
       width: 100%;
     }
 
     h1 {
-      font-size: 1.4rem;
+      font-size: 1.8rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
       color: #fff;
-      text-shadow: 0 0 10px var(--neon-cyan);
-      margin-bottom: 10px;
+      text-shadow: 0 0 10px var(--neon-cyan), 0 0 25px var(--neon-cyan);
+      margin-bottom: 12px;
     }
 
     .status-panel {
       display: flex;
-      gap: 10px;
+      gap: 15px;
       justify-content: center;
       align-items: center;
       background: rgba(255, 255, 255, 0.05);
-      padding: 8px 15px;
+      padding: 10px 25px;
       border-radius: 50px;
       border: 1px solid rgba(0, 243, 255, 0.4);
       box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
@@ -185,73 +186,65 @@
       background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
       border: none;
       color: white;
-      padding: 8px 16px;
-      font-size: 0.85rem;
+      padding: 12px 24px;
+      font-size: 1rem;
       font-weight: bold;
       border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 0 10px var(--neon-pink);
+      box-shadow: 0 0 15px var(--neon-pink);
       transition: all 0.3s ease;
       text-transform: uppercase;
     }
 
     .btn-play:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px var(--neon-pink);
+      box-shadow: 0 0 25px var(--neon-pink);
     }
 
     .info-badge {
-      font-size: 0.88rem;
+      font-size: 1rem;
       font-weight: bold;
-      padding: 4px 10px;
+      padding: 6px 14px;
       border-radius: 20px;
       background: rgba(0, 0, 0, 0.4);
     }
 
-    .timer-board { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan); }
-    .score-board { color: var(--neon-green); text-shadow: 0 0 8px var(--neon-green); }
-    .profession-board { color: var(--neon-yellow); text-shadow: 0 0 8px var(--neon-yellow); }
+    .timer-board { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); }
+    .score-board { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
+    .profession-board { color: var(--neon-yellow); text-shadow: 0 0 10px var(--neon-yellow); }
 
     #message {
-      margin-top: 8px;
-      font-size: 1rem;
+      margin-top: 15px;
+      font-size: 1.2rem;
       font-weight: bold;
-      min-height: 24px;
+      min-height: 32px;
       text-align: center;
     }
 
     .msg-success { color: var(--neon-green); text-shadow: 0 0 12px var(--neon-green); }
     .msg-error { color: var(--neon-pink); text-shadow: 0 0 12px var(--neon-pink); }
 
-    /* Grid Ringkas Agar Muat di Layar HP & Laptop */
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 20px;
       width: 100%;
-      margin-top: 10px;
-    }
-
-    @media (max-width: 600px) {
-      .grid-container {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 6px;
-      }
+      margin-top: 15px;
     }
 
     .instrument-card {
       background: var(--card-bg);
-      border-radius: 8px;
+      border-radius: 14px;
       aspect-ratio: 3 / 4;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
       position: relative;
-      border: 1.5px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-      transition: all 0.2s ease;
-      padding: 4px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      padding: 10px;
       overflow: hidden;
     }
 
@@ -259,69 +252,37 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 5px;
+      border-radius: 8px;
     }
 
     .instrument-card:hover {
-      transform: scale(1.05);
+      transform: translateY(-8px) scale(1.04);
       border-color: var(--card-neon-color);
-      box-shadow: 0 0 15px var(--card-neon-color);
+      box-shadow: 0 0 25px var(--card-neon-color), inset 0 0 15px var(--card-neon-color);
+    }
+
+    .instrument-card.correct {
+      border-color: var(--neon-green) !important;
+      box-shadow: 0 0 40px var(--neon-green), inset 0 0 20px var(--neon-green) !important;
+      animation: pulse-correct 0.6s ease;
     }
 
     .instrument-card.wrong {
       border-color: #ff0000 !important;
-      box-shadow: 0 0 20px #ff0000 !important;
+      box-shadow: 0 0 35px #ff0000, inset 0 0 15px #ff0000 !important;
       animation: shake 0.4s ease;
+    }
+
+    @keyframes pulse-correct {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-5px); }
-      40%, 80% { transform: translateX(5px); }
-    }
-
-    /* Modal Overlay Khusus Gambar Benar (Full Screen Pop-up) */
-    .correct-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.92);
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .correct-box {
-      max-width: 90vw;
-      max-height: 70vh;
-      border-radius: 16px;
-      border: 4px solid var(--neon-green);
-      box-shadow: 0 0 40px var(--neon-green);
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-
-    .correct-box img {
-      width: 100%;
-      max-height: 65vh;
-      object-fit: contain;
-      display: block;
-    }
-
-    .correct-text {
-      font-size: 1.6rem;
-      font-weight: 900;
-      color: var(--neon-green);
-      text-shadow: 0 0 15px var(--neon-green);
-      text-align: center;
-      padding: 0 15px;
-    }
-
-    @keyframes zoomIn {
-      from { transform: scale(0.3); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
     }
 
     /* Modal Game Over */
@@ -340,13 +301,13 @@
       border: 2px solid var(--neon-cyan);
       box-shadow: 0 0 25px var(--neon-cyan);
       border-radius: 16px;
-      padding: 25px;
+      padding: 30px;
       width: 90%;
-      max-width: 380px;
+      max-width: 400px;
       text-align: center;
     }
 
-    .btn-restart {
+    .btn-submit {
       background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
       border: none;
       color: #fff;
@@ -362,7 +323,7 @@
 </head>
 <body>
 
-  <!-- TAMPILAN AWAL -->
+  <!-- 1. TAMPILAN AWAL SEPERTI SCREENSHOT -->
   <div class="welcome-container" id="welcomeScreen">
     <div class="brand-title">ZULKARNAEN</div>
     <div class="sub-title">🎧 KUIS EAR TRAINING UNGGUL 🎧</div>
@@ -378,14 +339,10 @@
     <div class="rules-card">
       <h3>ATURAN EAR TRAINING:</h3>
       <ul>
-        <li>🎧 <b>Putaran Pertama:</b> Semua 20 alat musik diputar bergiliran 1x, setelah itu diacak.</li>
-        <li>⏱️ <b>Waktu Total:</b> 30 Menit.</li>
-        <li>💯 <b>Sistem Skor:</b>
-          <br>• Jawaban Benar: +10 Poin
-          <br>• Jawaban Salah: -5 Poin
-        </li>
-        <li>👑 <b>Target Maksimal:</b> Kuis otomatis selesai saat mencapai 500 Poin.</li>
-        <li>🎖️ <b>Pangkat/Ikon:</b>
+        <li>🎧 <b>Sistem Putaran:</b> Putaran pertama semua alat musik wajib muncul, baru kemudian diacak.</li>
+        <li>⏱️ <b>Waktu Kuis:</b> Total waktu kuis adalah 30 Menit.</li>
+        <li>💯 <b>Sistem Skor:</b> Jawaban benar (+10 Poin), Jawaban salah (-10 Poin).</li>
+        <li>⚔️ <b>Pangkat/Ikon Profesi:</b>
           <br>• 400 - 500 : 👑 Presiden
           <br>• 175 - 399 : 💼 Menteri
           <br>• 90 - 174 : 👨‍🏫 Guru
@@ -397,10 +354,10 @@
     <button class="btn-start" id="btnStartGame">START GAME 🚀</button>
   </div>
 
-  <!-- TAMPILAN KUIS UTAMA -->
+  <!-- 2. TAMPILAN PERMAINAN -->
   <div class="game-container" id="gameScreen">
     <header>
-      <h1>Tebak Alat Musik Tradisional</h1>
+      <h1>Tebak Alat Musik Tradisional Indonesia</h1>
       <div class="status-panel">
         <button class="btn-play" id="btnPlay">🎼 Putar Suara Target</button>
         <div class="info-badge timer-board">⏱️ <span id="timer">30:00</span></div>
@@ -413,67 +370,52 @@
     <div class="grid-container" id="grid"></div>
   </div>
 
-  <!-- OVERLAY BENAR (Gambar Membesar Menutupi Layar) -->
-  <div class="correct-overlay" id="correctOverlay">
-    <div class="correct-box">
-      <img id="correctImage" src="" alt="Gambar Benar">
-    </div>
-    <div class="correct-text" id="correctText">BENAR! Ini adalah...</div>
-  </div>
-
-  <!-- MODAL SELESAI -->
+  <!-- MODAL GAME OVER -->
   <div class="modal-overlay" id="modalGameOver" style="display: none;">
-    <div class="modal-box" id="gameOverBox">
-      <h2 id="gameOverTitle" style="color: var(--neon-pink); margin-bottom: 15px;">KUIS SELESAI! ⏱️</h2>
-      <p id="gameOverReason" style="margin: 10px 0; font-size: 1rem;">Waktu kuis telah habis!</p>
-      <p style="font-size: 1.2rem; font-weight: bold; color: var(--neon-green); margin-top: 10px;">Skor Akhir: <span id="finalScore">0</span> / 500</p>
+    <div class="modal-box" style="border-color: var(--neon-pink); box-shadow: 0 0 25px var(--neon-pink);">
+      <h2 style="color: var(--neon-pink);">KUIS SELESAI! ⏱️</h2>
+      <p id="gameOverReason" style="margin: 15px 0; font-size: 1.1rem;">Waktu 30 menit telah habis.</p>
+      <p style="font-size: 1.3rem; font-weight: bold; color: var(--neon-green);">Skor Akhir: <span id="finalScore">0</span></p>
       <p style="font-size: 1.1rem; margin-top: 8px;">Pangkat Akhir: <span id="finalProfession">⚔️ Warrior</span></p>
-      <p id="sendStatus" style="margin-top: 15px; font-size: 0.85rem; color: var(--neon-yellow);">Mengirim data ke guru...</p>
-      <button class="btn-restart" onclick="location.reload()">Main Lagi 🔄</button>
+      <p id="sendStatus" style="margin-top: 10px; font-size: 0.9rem; color: var(--neon-yellow);">Mengirim data ke guru...</p>
+      <button class="btn-submit" onclick="location.reload()">Main Lagi 🔄</button>
     </div>
   </div>
 
   <script>
-    const URL_GOOGLE_SHEETS = "GANTI_DENGAN_URL_WEB_APP_GOOGLE_APPS_SCRIPT_KAMU";
+    // MASUKKAN URL GOOGLE APPS SCRIPT KAMU DI SINI
+    const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbwHaYUn_Ht10DTaMc6CXJfkjDVi8IQGI4wV_CCmldkwLTudZR9yPa7eGH-lDaR22EyD/exec";
 
     let siswaNama = "";
     let siswaKelas = "";
     let score = 0;
     let isGameOver = false;
     let isPlaying = false;
-    
-    let totalSeconds = 30 * 60; // 30 Menit
+
+    // Timer 30 Menit (1800 detik)
+    let totalSeconds = 30 * 60;
     let timerInterval = null;
 
-    // DATA 20 ALAT MUSIK (File sejajar di dalam repo)
+    // DATA ASLI LENGKAP TANPA DIKURANGI[span_0](start_span)[span_0](end_span)
     const instrumentsData = {
-      akordeon: { name: "Akordeon", audioFile: "akordeon.mp3", imageFile: "akordeon.JPG" },
-      angklung: { name: "Angklung", audioFile: "angklung.mp3", imageFile: "angklung.JPG" },
-      arababu: { name: "Arababu", audioFile: "arababu.mp3", imageFile: "arababu.JPG" },
-      bansi: { name: "Bansi", audioFile: "bansi.mp3", imageFile: "bansi.jpg" },
-      biola: { name: "Biola", audioFile: "biola.mp3", imageFile: "biola.JPG" },
-      gambus: { name: "Gambus", audioFile: "gambus.mp3", imageFile: "gambus.JPG" },
-      gamelan: { name: "Gamelan", audioFile: "gamelan.mp3", imageFile: "gamelan.JPG" },
-      gandangtabuik: { name: "Gandang Tabuik", audioFile: "gandangtabuik.mp3", imageFile: "gandangtabuik.JPG" },
-      gendangmelayu: { name: "Gendang Melayu", audioFile: "gendangmelayu.mp3", imageFile: "gendangmelayu.JPG" },
-      gondangbatak: { name: "Gondang Batak", audioFile: "gondangbatak.mp3", imageFile: "gondangbatak.JPG" },
-      kecapi: { name: "Kecapi", audioFile: "kecapi.mp3", imageFile: "kecapi.jpg" },
-      kolintang: { name: "Kolintang", audioFile: "kolintang.mp3", imageFile: "kolintang.JPG" },
-      kompang: { name: "Kompang", audioFile: "kompang.mp3", imageFile: "kompang.JPG" },
-      marwas: { name: "Marwas", audioFile: "marwas.mp3", imageFile: "marwas.JPG" },
-      pikon: { name: "Pikon", audioFile: "pikon.mp3", imageFile: "pikon.jpg" },
-      saluang: { name: "Saluang", audioFile: "saluang.mp3", imageFile: "saluang.jpg" },
-      sape: { name: "Sape", audioFile: "sape.mp3", imageFile: "sape.JPG" },
-      sasando: { name: "Sasando", audioFile: "sasando.mp3", imageFile: "sasando.JPG" },
-      surdam: { name: "Surdam", audioFile: "surdam.mp3", imageFile: "surdam.jpg" },
-      talempong: { name: "Talempong", audioFile: "talempong.mp3", imageFile: "talempong.JPG" }
+      sasando: { name: "Sasando", audioFile: "sasando.mp3", imageId: "1iLAIIOUyKm1OW40_aSPSoFwn07rys6YC" },
+      akordeon: { name: "Akordeon", audioFile: "akordeon.mp3", imageId: "1KRk0kbHbZCe-HBsOqHC4Ei60qa85zPkX" },
+      kompang: { name: "Kompang", audioFile: "kompang.mp3", imageId: "1HgXPEtOY1eqAOv9hQr6spGM4tCUE5loj" },
+      gendang_melayu: { name: "Gendang Melayu", audioFile: "gendangmelayu.mp3", imageId: "1NWIItCaOID8OtXzeUaqCkiH66ZJyBvXY" },
+      saluang: { name: "Saluang", audioFile: "saluang.mp3", imageId: "1RIMfOIRL8a_SzQPHLsR_Yelqnco7RDym" },
+      bansi: { name: "Bansi", audioFile: "bansi.mp3", imageId: "12Og8Hhu1Bs3egLXZVNMUBxTFzyl36YXo" },
+      gamelan: { name: "Gamelan", audioFile: "gamelan.mp3", imageId: "1m5GpYfqLGQ6vI_1SweKGEMt6qLrKQl0M" },
+      marwas: { name: "Marwas", audioFile: "marwas.mp3", imageId: "181mdCNBlMkjCmlwJUKB9_alPRNT1IGVL" },
+      biola: { name: "Biola", audioFile: "biola.mp3", imageId: "1rKICH8zisMy76s1m4h_bd1RCgeIidpYG" },
+      gondang_batak: { name: "Gondang Batak", audioFile: "gondangbatak.mp3", imageId: "10rTmVKfJDkGmSVLbtRKCky02tigU0fDc" },
+      talempong: { name: "Talempong", audioFile: "talempong.mp3", imageId: "1F_1-qD_IvmdE1_LIXazehXRCry0I2KcU" }
     };
 
     const instrumentKeys = Object.keys(instrumentsData);
     let targetKey = '';
     let currentAudio = null;
 
-    // Antrean Putaran Pertama
+    // Logika Putaran Pertama: Semua alat terpilih dulu 1x baru diacak[span_1](start_span)[span_1](end_span)
     let firstRoundQueue = [...instrumentKeys].sort(() => Math.random() - 0.5);
 
     document.getElementById('btnStartGame').addEventListener('click', () => {
@@ -481,7 +423,7 @@
       const kelas = document.getElementById('inputKelas').value.trim();
 
       if (!nama || !kelas) {
-        alert("Harap isi Nama Lengkap dan Kelas terlebih dahulu!");
+        alert("Harap isi Nama dan Kelas terlebih dahulu!");
         return;
       }
 
@@ -511,6 +453,7 @@
       }, 1000);
     }
 
+    // Pangkat / Profesi berdasarkan rentang nilai
     function getProfessionStatus(currentScore) {
       if (currentScore >= 400) {
         return "👑 Presiden";
@@ -533,124 +476,6 @@
       } else {
         const randomIndex = Math.floor(Math.random() * instrumentKeys.length);
         targetKey = instrumentKeys[randomIndex];
-      }
-    }
-
-    function playAudio(filePath) {
-      if (!filePath || isGameOver) return;
-
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-      }
-
-      currentAudio = new Audio(filePath);
-      currentAudio.play().then(() => {
-        if (isPlaying) {
-          messageEl.textContent = "Dengarkan baik-baik... Tebak alat musik yang bersuara ini!";
-          messageEl.className = "";
-        }
-      }).catch(err => {
-        console.error("Gagal memutar audio:", err);
-        messageEl.textContent = "Error: File audio tidak ditemukan!";
-        messageEl.className = "msg-error";
-      });
-    }
-
-    const neonColors = ['#00f3ff', '#ff007f', '#39ff14', '#ffe600', '#9d4edd'];
-    const gridEl = document.getElementById('grid');
-    const btnPlayEl = document.getElementById('btnPlay');
-    const scoreEl = document.getElementById('score');
-    const messageEl = document.getElementById('message');
-
-    function renderCards() {
-      gridEl.innerHTML = '';
-      const shuffled = [...instrumentKeys].sort(() => Math.random() - 0.5);
-
-      shuffled.forEach((key, index) => {
-        const item = instrumentsData[key];
-        const card = document.createElement('div');
-        card.classList.add('instrument-card');
-        card.style.setProperty('--card-neon-color', neonColors[index % neonColors.length]);
-
-        const img = document.createElement('img');
-        img.src = item.imageFile;
-        img.alt = item.name;
-        card.appendChild(img);
-
-        card.dataset.key = key;
-        card.addEventListener('click', () => handleCardClick(card, key));
-        gridEl.appendChild(card);
-      });
-    }
-
-    btnPlayEl.addEventListener('click', () => {
-      if (isGameOver) return;
-      isPlaying = true;
-      playAudio(instrumentsData[targetKey].audioFile);
-    });
-
-    function handleCardClick(card, clickedKey) {
-      if (isGameOver) return;
-
-      playAudio(instrumentsData[clickedKey].audioFile);
-
-      if (!isPlaying) {
-        messageEl.textContent = "Klik 'Putar Suara Target' terlebih dahulu!";
-        messageEl.className = "msg-error";
-        return;
-      }
-
-      if (clickedKey === targetKey) {
-        score += 10;
-        
-        scoreEl.textContent = score;
-        updateProfessionDisplay();
-
-        const realName = instrumentsData[clickedKey].name;
-        const imageSrc = instrumentsData[clickedKey].imageFile;
-
-        // Tampilkan Overlay Pop-Up Benar Menutupi Layar
-        const overlay = document.getElementById('correctOverlay');
-        document.getElementById('correctImage').src = imageSrc;
-        document.getElementById('correctText').textContent = `BENAR! 🎉 Ini adalah ${realName} (+10 Poin)`;
-        overlay.style.display = 'flex';
-
-        isPlaying = false;
-
-        // CEK JIKA MENCAPAI SKOR MAKSIMAL 500
-        if (score >= 500) {
-          score = 500;
-          scoreEl.textContent = score;
-          setTimeout(() => {
-            overlay.style.display = 'none';
-            triggerGameOver("SELAMAT! 👑 Kamu mencapai skor maksimal 500 Poin!");
-          }, 2000);
-          return;
-        }
-
-        setTimeout(() => {
-          overlay.style.display = 'none';
-          pickNextTarget();
-          messageEl.textContent = "Klik 'Putar Suara Target' untuk melanjutkan!";
-          messageEl.className = "";
-        }, 2000);
-
-      } else {
-        // Kurangi 5 poin jika salah
-        score -= 5;
-        if (score < 0) score = 0;
-
-        scoreEl.textContent = score;
-        updateProfessionDisplay();
-        card.classList.add('wrong');
-
-        messageEl.textContent = "SALAH! ❌ Poin berkurang (-5 Poin). Coba lagi!";
-        messageEl.className = "msg-error";
-
-        setTimeout(() => {
-          card.classList.remove('wrong');
-        }, 600);
       }
     }
 
@@ -687,17 +512,125 @@
       document.getElementById('finalScore').textContent = score;
       document.getElementById('finalProfession').textContent = getProfessionStatus(score);
       document.getElementById('gameOverReason').textContent = reason;
-      
-      if (score >= 500) {
-        document.getElementById('gameOverTitle').textContent = "SELESAI KELAS SANG JUARA! 👑";
-        document.getElementById('gameOverTitle').style.color = "var(--neon-green)";
-      }
-
       document.getElementById('modalGameOver').style.display = 'flex';
 
-      // Mengirimkan skor ke Google Sheets secara otomatis
       sendScoreToGSheet(score);
     }
+
+    function driveImageUrl(fileId) {
+      return `https://lh3.googleusercontent.com/d/${fileId}`;
+    }
+
+    // Pemutaran audio menggunakan format asli tanpa modifikasi lokasi path[span_2](start_span)[span_2](end_span)
+    function playAudio(fileName) {
+      if (!fileName || isGameOver) return;
+
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+
+      currentAudio = new Audio(`./${fileName}`);
+
+      currentAudio.play().then(() => {
+        if (isPlaying) {
+          messageEl.textContent = "Dengarkan baik-baik... Gambar mana yang bersuara seperti ini?";
+          messageEl.className = "";
+        }
+      }).catch(err => {
+        console.error("Gagal memutar audio:", err);
+        messageEl.textContent = "Error: File audio tidak ditemukan!";
+        messageEl.className = "msg-error";
+      });
+    }
+
+    const neonColors = ['#00f3ff', '#ff007f', '#39ff14', '#ffe600', '#9d4edd'];
+    const gridEl = document.getElementById('grid');
+    const btnPlayEl = document.getElementById('btnPlay');
+    const scoreEl = document.getElementById('score');
+    const messageEl = document.getElementById('message');
+
+    function renderCards() {
+      gridEl.innerHTML = '';
+      const shuffled = [...instrumentKeys].sort(() => Math.random() - 0.5);
+
+      shuffled.forEach((key, index) => {
+        const item = instrumentsData[key];
+        const card = document.createElement('div');
+        card.classList.add('instrument-card');
+        const color = neonColors[index % neonColors.length];
+        card.style.setProperty('--card-neon-color', color);
+
+        const img = document.createElement('img');
+        img.src = driveImageUrl(item.imageId);
+        img.alt = item.name;
+        card.appendChild(img);
+
+        card.dataset.key = key;
+        card.addEventListener('click', () => handleCardClick(card, key));
+        gridEl.appendChild(card);
+      });
+    }
+
+    btnPlayEl.addEventListener('click', () => {
+      if (isGameOver) return;
+      if (!targetKey) {
+        pickNextTarget();
+      }
+      isPlaying = true;
+      playAudio(instrumentsData[targetKey].audioFile);
+    });
+
+    function handleCardClick(card, clickedKey) {
+      if (isGameOver) return;
+
+      playAudio(instrumentsData[clickedKey].audioFile);
+
+      if (!isPlaying) {
+        messageEl.textContent = "Klik 'Putar Suara Target' terlebih dahulu!";
+        messageEl.className = "msg-error";
+        return;
+      }
+
+      if (clickedKey === targetKey) {
+        score += 10;
+        if (score > 500) score = 500; // Maksimal Presiden
+
+        scoreEl.textContent = score;
+        updateProfessionDisplay();
+        card.classList.add('correct');
+
+        const realName = instrumentsData[clickedKey].name;
+        messageEl.textContent = `KAMU BENAR! Ini adalah ${realName} 🎉 (+10 Poin)`;
+        messageEl.className = "msg-success";
+        isPlaying = false;
+
+        setTimeout(() => {
+          card.classList.remove('correct');
+          pickNextTarget();
+          messageEl.textContent = "Klik 'Putar Suara Target' untuk melanjutkan!";
+          messageEl.className = "";
+        }, 2000);
+
+      } else {
+        // Pengurangan 10 poin jika salah
+        score -= 10;
+        if (score < 0) score = 0;
+
+        scoreEl.textContent = score;
+        updateProfessionDisplay();
+        card.classList.add('wrong');
+
+        messageEl.textContent = "Salah! Poin berkurang (-10 Poin). Coba lagi!";
+        messageEl.className = "msg-error";
+
+        setTimeout(() => {
+          card.classList.remove('wrong');
+        }, 600);
+      }
+    }
+
+    renderCards();
   </script>
 </body>
 </html>
